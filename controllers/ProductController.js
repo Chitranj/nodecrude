@@ -1,16 +1,16 @@
 //Dummy Product database
-
+import  {v4 as uuid} from 'uuid';
 const products = [
-	{id:1, name: "A", price : 102},
-	{id:2, name: "B", price : 112},
-	{id:3, name: "C", price : 240},
-	{id:4, name: "D", price : 540},
-	{id:5, name: "E", price : 500},
-	{id:6, name: "F", price : 100},
-	{id:7, name: "G", price : 201},
-	{id:8, name: "H", price : 235},
-	{id:9, name: "I", price : 115},
-	{id:10, name: "J", price : 225}
+	{id:uuid(), name: "A", price : 102},
+	{id:uuid(), name: "B", price : 112},
+	{id:uuid(), name: "C", price : 240},
+	{id:uuid(), name: "D", price : 540},
+	{id:uuid(), name: "E", price : 500},
+	{id:uuid(), name: "F", price : 100},
+	{id:uuid(), name: "G", price : 201},
+	{id:uuid(), name: "H", price : 235},
+	{id:uuid(), name: "I", price : 115},
+	{id:uuid(), name: "J", price : 225}
 ];
 
 const getProducts = (req, res) => {
@@ -31,17 +31,38 @@ const getProductById = (req, res) => {
 }
 
 const addProducts = (req, res) => {
-	let {id, name, price} = req.body;
-	products.push({id, name, price});
+	let product = req.body;
+	let id = uuid();
+	products.push({...product, id});
 	res.send(products);
 }
 
 const deleteProduct = (req, res) => {
-	res.send(`Deleted Product id is ${req.params.id}`);
+	
+	let id = req.params.id;
+	
+	let newProducts = products.filter((product) => product.id != id);
+	
+	//const data = [newProducts];
+	res.send(newProducts);
 }
 
 const updateProduct = (req, res) => {
-	res.send("Update Product");
+	
+	let id = req.params.id;
+	
+	let {name, price} = req.body;
+	
+	let product = products.find(prod => prod.id ==  id);
+	
+	if (!product) {
+        return res.status(404).send("Product not found");
+    }
+	
+	product.name = name;
+	product.price = price;
+	
+	res.send(products);
 }
 
 export {getProducts, getProductById, addProducts, deleteProduct, updateProduct};
