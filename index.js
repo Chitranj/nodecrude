@@ -14,7 +14,7 @@ app.use("/products", ProductRoutes);
 //Handle not found
 app.use((req, res) => {
 	res.status(404).send('Route Not Found');
-})
+});
 
 app.listen(PORT, (err) => {
 	if(err) throw err;
