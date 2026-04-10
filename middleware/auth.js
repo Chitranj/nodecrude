@@ -14,7 +14,7 @@ function verifyToken(req, res, next) {
 		if(error) {
 			return res.status(401).json({message : "Unauthorized"});
 		}
-		
+
 		req.user = decoded;
 		next();
 	});

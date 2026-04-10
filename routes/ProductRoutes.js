@@ -3,7 +3,6 @@ import { getProducts, getProductById, addProducts, deleteProduct, updateProduct}
 import {verifyToken} from '../middleware/auth.js';
 import {fileUpload} from '../middleware/fileUpload.js';
 
-
 const router = express.Router();
 
 router.get("/getProducts", getProducts);
